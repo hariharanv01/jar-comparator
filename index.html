@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Jar-comparator by hariharanv01</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Jar-comparator</h1>
+      <h2 class="project-tagline">JAR Comparator compares two different versions of the same jar files(compiled) and views/persists the difference between the two jars. The difference can be viewed in the command line or stored in an XML/HTML file.</h2>
+      <a href="https://github.com/hariharanv01/jar-comparator" class="btn">View on GitHub</a>
+      <a href="https://github.com/hariharanv01/jar-comparator/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/hariharanv01/jar-comparator/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="jar-comparator" class="anchor" href="#jar-comparator" aria-hidden="true"><span class="octicon octicon-link"></span></a>JAR Comparator</h1>
+
+<h3>
+<a id="about" class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h3>
+
+<p>JAR Comparator compares two different versions of the same jar files(compiled) and views/persists the difference between the two jars. The difference can be viewed in the command line or stored in an XML/HTML file.</p>
+
+<h3>
+<a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Usage</h3>
+
+<ol>
+<li>Compile and the build the jar-comparator.
+
+<ol>
+<li>Go to the home directory of the project, say. </li>
+<li>mvn clean install</li>
+</ol>
+</li>
+<li>Once build, you can find the Uber jar at /target/jar-comparator--executable.jar</li>
+<li>
+<p>Run the uber jar</p>
+
+<div class="highlight highlight-source-shell"><pre>java -jar <span class="pl-k">&lt;</span>path of uber jar<span class="pl-k">&gt;</span> <span class="pl-k">&lt;</span>path of jar 1 to be compared<span class="pl-k">&gt;</span> <span class="pl-k">&lt;</span>path of jar 2 to be compared<span class="pl-k">&gt;</span></pre></div>
+</li>
+</ol>
+
+<h3>
+<a id="additional-usages" class="anchor" href="#additional-usages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Additional Usages</h3>
+
+<p>The above command executes and prints the output in the console. If you prefer to vizualize it better, you can instead save the output in XML/HTML formats by running the following command.</p>
+
+<div class="highlight highlight-source-shell"><pre>java -jar <span class="pl-k">&lt;</span>uber jar<span class="pl-k">&gt;</span> <span class="pl-k">&lt;</span>jar <span class="pl-k">1&gt;</span> <span class="pl-k">&lt;</span>jar<span class="pl-k">2&gt;</span> <span class="pl-k">&lt;</span>path to XML/HTML file<span class="pl-k">&gt;</span></pre></div>
+
+<p>Also, if you intend to use the API to get the result in a Java object, you can use</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">com.h2v.java.comparator.reflect<span class="pl-k">.</span>JarComparator</span><span class="pl-k">.</span>compare(jar1path, jar2path)</pre></div>
+
+<h3>
+<a id="filtering-packages" class="anchor" href="#filtering-packages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filtering Packages</h3>
+
+<p>If you intend to compare Classes only in a specific set of packages, pass the VM argument "config.pkgs"</p>
+
+<div class="highlight highlight-source-shell"><pre>java -jar -Dconfig.pkgs=<span class="pl-k">&lt;</span>Comma separated list of package names<span class="pl-k">&gt;</span> <span class="pl-k">&lt;</span>uber jar<span class="pl-k">&gt;</span> <span class="pl-k">&lt;</span>jar <span class="pl-k">1&gt;</span> <span class="pl-k">&lt;</span>jar<span class="pl-k">2&gt;</span> [path to XML/HTML file]</pre></div>
+
+<p>Alternatively, if you are using the API, you can achieve the same effect by setting the System property "config.pkgs".</p>
+
+<h3>
+<a id="full-command" class="anchor" href="#full-command" aria-hidden="true"><span class="octicon octicon-link"></span></a>Full Command</h3>
+
+<div class="highlight highlight-source-shell"><pre>java -jar [-Dconfig.pkgs<span class="pl-k">=&lt;</span>Comma separated package names<span class="pl-k">&gt;</span>] <span class="pl-k">&lt;</span>uber jar<span class="pl-k">&gt;</span> <span class="pl-k">&lt;</span>jar <span class="pl-k">1&gt;</span> <span class="pl-k">&lt;</span>jar<span class="pl-k">2&gt;</span> [path to XML/HTML file]</pre></div>
+
+<h3>
+<a id="what-are-all-compared" class="anchor" href="#what-are-all-compared" aria-hidden="true"><span class="octicon octicon-link"></span></a>What are all compared?</h3>
+
+<ol>
+<li><p>Classes (Top level, Local, Member, Anonymous) - Added/Removed.</p></li>
+<li><p>Methods - Added/Removed. Methods whose parameters types are modified/new parameters added/existing parameters removed are showed as deleted and added. This limitation is due to Java's support for method overloading.</p></li>
+<li><p>Annotations - Added/Removed/Modified. Annotations that are defined for Types(Class), methods and method arguments are considered. Note that, only top level annotation parameters are compared. Nested annotations are ignored.</p></li>
+</ol>
+
+<h3>
+<a id="sample-output" class="anchor" href="#sample-output" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample output</h3>
+
+<ol>
+<li>
+<p>Console Output</p>
+
+<pre lang="text"><code>Element:com.tester.App$InnSta;Element Type:CLASS;Target:com.tester.App;Target Type:CLASS;Status:ADDED;
+Element:java.lang.Deprecated;Element Type:ANNOTATION;Target:public void com.tester.App.name();Target Type:METHOD;Status:ADDED;
+Element:com.tester.ann.Tin;Element Type:ANNOTATION;Target:com.tester.App;Target Type:CLASS;Left Value:[@com.tester.ann.Tin$TinTin(an=b), @com.tester.ann.Tin$TinTin(an=bb), @com.tester.ann.Tin$TinTin(an=bbb)];Right Value:[@com.tester.ann.Tin$TinTin(an=a), @com.tester.ann.Tin$TinTin(an=aa)];Status:MODIFIED;
+Element:java.lang.Deprecated;Element Type:ANNOTATION;Target:com.tester.App;Target Type:CLASS;Status:DELETED;
+</code></pre>
+</li>
+<li>
+<p>XML Output</p>
+
+<div class="highlight highlight-text-xml"><pre>&lt;?<span class="pl-ent">xml</span><span class="pl-e"> version</span>=<span class="pl-s"><span class="pl-pds">"</span>1.0<span class="pl-pds">"</span></span><span class="pl-e"> encoding</span>=<span class="pl-s"><span class="pl-pds">"</span>UTF-8<span class="pl-pds">"</span></span><span class="pl-e"> standalone</span>=<span class="pl-s"><span class="pl-pds">"</span>yes<span class="pl-pds">"</span></span>?&gt;
+&lt;<span class="pl-ent">comparisonResults</span>&gt;
+    &lt;<span class="pl-ent">resultGroups</span>&gt;
+        &lt;<span class="pl-ent">className</span>&gt;com.tester.App$InnSta&lt;/<span class="pl-ent">className</span>&gt;
+        &lt;<span class="pl-ent">results</span>&gt;
+            &lt;<span class="pl-ent">elementName</span>&gt;com.tester.App$InnSta&lt;/<span class="pl-ent">elementName</span>&gt;
+            &lt;<span class="pl-ent">elementType</span>&gt;CLASS&lt;/<span class="pl-ent">elementType</span>&gt;
+            &lt;<span class="pl-ent">status</span>&gt;ADDED&lt;/<span class="pl-ent">status</span>&gt;
+            &lt;<span class="pl-ent">targetName</span>&gt;com.tester.App&lt;/<span class="pl-ent">targetName</span>&gt;
+            &lt;<span class="pl-ent">targetType</span>&gt;CLASS&lt;/<span class="pl-ent">targetType</span>&gt;
+        &lt;/<span class="pl-ent">results</span>&gt;
+    &lt;/<span class="pl-ent">resultGroups</span>&gt;
+    &lt;<span class="pl-ent">resultGroups</span>&gt;
+        &lt;<span class="pl-ent">className</span>&gt;com.tester.App&lt;/<span class="pl-ent">className</span>&gt;
+        &lt;<span class="pl-ent">results</span>&gt;
+            &lt;<span class="pl-ent">elementName</span>&gt;java.lang.Deprecated&lt;/<span class="pl-ent">elementName</span>&gt;
+            &lt;<span class="pl-ent">elementType</span>&gt;ANNOTATION&lt;/<span class="pl-ent">elementType</span>&gt;
+            &lt;<span class="pl-ent">status</span>&gt;DELETED&lt;/<span class="pl-ent">status</span>&gt;
+            &lt;<span class="pl-ent">targetName</span>&gt;com.tester.App&lt;/<span class="pl-ent">targetName</span>&gt;
+            &lt;<span class="pl-ent">targetType</span>&gt;CLASS&lt;/<span class="pl-ent">targetType</span>&gt;
+        &lt;/<span class="pl-ent">results</span>&gt;
+        &lt;<span class="pl-ent">results</span>&gt;
+            &lt;<span class="pl-ent">elementName</span>&gt;java.lang.Deprecated&lt;/<span class="pl-ent">elementName</span>&gt;
+            &lt;<span class="pl-ent">elementType</span>&gt;ANNOTATION&lt;/<span class="pl-ent">elementType</span>&gt;
+            &lt;<span class="pl-ent">status</span>&gt;ADDED&lt;/<span class="pl-ent">status</span>&gt;
+            &lt;<span class="pl-ent">targetName</span>&gt;public void com.tester.App.name()&lt;/<span class="pl-ent">targetName</span>&gt;
+            &lt;<span class="pl-ent">targetType</span>&gt;METHOD&lt;/<span class="pl-ent">targetType</span>&gt;
+        &lt;/<span class="pl-ent">results</span>&gt;
+        &lt;<span class="pl-ent">results</span>&gt;
+            &lt;<span class="pl-ent">elementName</span>&gt;com.tester.ann.Tin&lt;/<span class="pl-ent">elementName</span>&gt;
+            &lt;<span class="pl-ent">elementType</span>&gt;ANNOTATION&lt;/<span class="pl-ent">elementType</span>&gt;
+            &lt;<span class="pl-ent">leftVal</span>&gt;[@com.tester.ann.Tin$TinTin(an=b),
+                @com.tester.ann.Tin$TinTin(an=bb),
+                @com.tester.ann.Tin$TinTin(an=bbb)]&lt;/<span class="pl-ent">leftVal</span>&gt;
+            &lt;<span class="pl-ent">rightVal</span>&gt;[@com.tester.ann.Tin$TinTin(an=a),
+                @com.tester.ann.Tin$TinTin(an=aa)]&lt;/<span class="pl-ent">rightVal</span>&gt;
+            &lt;<span class="pl-ent">status</span>&gt;MODIFIED&lt;/<span class="pl-ent">status</span>&gt;
+            &lt;<span class="pl-ent">targetName</span>&gt;com.tester.App&lt;/<span class="pl-ent">targetName</span>&gt;
+            &lt;<span class="pl-ent">targetType</span>&gt;CLASS&lt;/<span class="pl-ent">targetType</span>&gt;
+        &lt;/<span class="pl-ent">results</span>&gt;
+    &lt;/<span class="pl-ent">resultGroups</span>&gt;
+    &lt;<span class="pl-ent">resultGroups</span>&gt;
+        &lt;<span class="pl-ent">className</span>&gt;com.tester.App$Inn&lt;/<span class="pl-ent">className</span>&gt;
+        &lt;<span class="pl-ent">results</span>&gt;
+            &lt;<span class="pl-ent">elementName</span>&gt;com.tester.App$Inn&lt;/<span class="pl-ent">elementName</span>&gt;
+            &lt;<span class="pl-ent">elementType</span>&gt;CLASS&lt;/<span class="pl-ent">elementType</span>&gt;
+            &lt;<span class="pl-ent">status</span>&gt;ADDED&lt;/<span class="pl-ent">status</span>&gt;
+            &lt;<span class="pl-ent">targetName</span>&gt;com.tester.App&lt;/<span class="pl-ent">targetName</span>&gt;
+            &lt;<span class="pl-ent">targetType</span>&gt;CLASS&lt;/<span class="pl-ent">targetType</span>&gt;
+        &lt;/<span class="pl-ent">results</span>&gt;
+    &lt;/<span class="pl-ent">resultGroups</span>&gt;
+&lt;/<span class="pl-ent">comparisonResults</span>&gt;    </pre></div>
+</li>
+<li>
+<p>HTML Output</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;html&gt;&lt;head&gt;&lt;title&gt;Jar Comparison Result&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;h2&gt;com.tester.App&lt;/h2&gt;&lt;table border=1&gt;&lt;tr&gt;&lt;th&gt;Target&lt;/th&gt;&lt;th&gt;Target type&lt;/th&gt;&lt;th&gt;Element&lt;/th&gt;&lt;th&gt;Element type&lt;/th&gt;&lt;th&gt;Left Value&lt;/th&gt;&lt;th&gt;Right Value&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;public void com.tester.App.name()&lt;/td&gt;&lt;td&gt;METHOD&lt;/td&gt;&lt;td&gt;java.lang.Deprecated&lt;/td&gt;&lt;td&gt;ANNOTATION&lt;/td&gt;&lt;td&gt;'NA'&lt;/td&gt;&lt;td&gt;'NA'&lt;/td&gt;&lt;td&gt;ADDED&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;com.tester.App&lt;/td&gt;&lt;td&gt;CLASS&lt;/td&gt;&lt;td&gt;java.lang.Deprecated&lt;/td&gt;&lt;td&gt;ANNOTATION&lt;/td&gt;&lt;td&gt;'NA'&lt;/td&gt;&lt;td&gt;'NA'&lt;/td&gt;&lt;td&gt;DELETED&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;com.tester.App&lt;/td&gt;&lt;td&gt;CLASS&lt;/td&gt;&lt;td&gt;com.tester.ann.Tin&lt;/td&gt;&lt;td&gt;ANNOTATION&lt;/td&gt;&lt;td&gt;[@com.tester.ann.Tin$TinTin(an=b), @com.tester.ann.Tin$TinTin(an=bb), @com.tester.ann.Tin$TinTin(an=bbb)]&lt;/td&gt;&lt;td&gt;[@com.tester.ann.Tin$TinTin(an=a), @com.tester.ann.Tin$TinTin(an=aa)]&lt;/td&gt;&lt;td&gt;MODIFIED&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;h2&gt;com.tester.App$Inn&lt;/h2&gt;&lt;table border=1&gt;&lt;tr&gt;&lt;th&gt;Target&lt;/th&gt;&lt;th&gt;Target type&lt;/th&gt;&lt;th&gt;Element&lt;/th&gt;&lt;th&gt;Element type&lt;/th&gt;&lt;th&gt;Left Value&lt;/th&gt;&lt;th&gt;Right Value&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;com.tester.App&lt;/td&gt;&lt;td&gt;CLASS&lt;/td&gt;&lt;td&gt;com.tester.App$Inn&lt;/td&gt;&lt;td&gt;CLASS&lt;/td&gt;&lt;td&gt;'NA'&lt;/td&gt;&lt;td&gt;'NA'&lt;/td&gt;&lt;td&gt;ADDED&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;h2&gt;com.tester.App$1&lt;/h2&gt;&lt;table border=1&gt;&lt;tr&gt;&lt;th&gt;Target&lt;/th&gt;&lt;th&gt;Target type&lt;/th&gt;&lt;th&gt;Element&lt;/th&gt;&lt;th&gt;Element type&lt;/th&gt;&lt;th&gt;Left Value&lt;/th&gt;&lt;th&gt;Right Value&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;public void com.tester.App.name()&lt;/td&gt;&lt;td&gt;METHOD&lt;/td&gt;&lt;td&gt;com.tester.App$1&lt;/td&gt;&lt;td&gt;CLASS&lt;/td&gt;&lt;td&gt;'NA'&lt;/td&gt;&lt;td&gt;'NA'&lt;/td&gt;&lt;td&gt;ADDED&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;h2&gt;com.tester.App$InnSta&lt;/h2&gt;&lt;table border=1&gt;&lt;tr&gt;&lt;th&gt;Target&lt;/th&gt;&lt;th&gt;Target type&lt;/th&gt;&lt;th&gt;Element&lt;/th&gt;&lt;th&gt;Element type&lt;/th&gt;&lt;th&gt;Left Value&lt;/th&gt;&lt;th&gt;Right Value&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;com.tester.App&lt;/td&gt;&lt;td&gt;CLASS&lt;/td&gt;&lt;td&gt;com.tester.App$InnSta&lt;/td&gt;&lt;td&gt;CLASS&lt;/td&gt;&lt;td&gt;'NA'&lt;/td&gt;&lt;td&gt;'NA'&lt;/td&gt;&lt;td&gt;ADDED&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</pre></div>
+</li>
+</ol>
+
+<h3>
+<a id="comparing-jars-with-dependencies" class="anchor" href="#comparing-jars-with-dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparing Jars with dependencies</h3>
+
+<p>If your Jars have dependency libraries, you can still compare the Jars as below</p>
+
+<ol>
+<li><p>Create Uber jars of your comparabale Jars, and then optionally give the package filter to not compare the dependency Jar files. </p></li>
+<li>
+<p>Give the JVM classpath option passing the paths of all the dependency library along with the Comparator Jar and invoke the Main class.</p>
+
+<div class="highlight highlight-source-shell"><pre>java -cp  <span class="pl-s"><span class="pl-pds">"</span>&lt;path to dependency libray:path to Comparator Uber  jar&gt;<span class="pl-pds">"</span></span> [-Dconfig.pkgs<span class="pl-k">=&lt;</span>Comma separated package names<span class="pl-k">&gt;</span>] com.h2v.java.comparator.reflect.JarComparator <span class="pl-k">&lt;</span>path to Jar <span class="pl-k">1&gt;</span> <span class="pl-k">&lt;</span>path to Jar <span class="pl-k">2&gt;</span> [path to XML/HTML file]</pre></div>
+</li>
+</ol>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/hariharanv01/jar-comparator">Jar-comparator</a> is maintained by <a href="https://github.com/hariharanv01">hariharanv01</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>

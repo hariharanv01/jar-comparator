@@ -1,4 +1,4 @@
-https://travis-ci.org/hariharanv01/jar-comparator.svg?branch=master
+[![Build Status](https://travis-ci.org/hariharanv01/jar-comparator.svg?branch=master)](https://travis-ci.org/hariharanv01/jar-comparator.svg?branch=master)
 
 # JAR Comparator
 

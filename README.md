@@ -1,3 +1,5 @@
+https://travis-ci.org/hariharanv01/jar-comparator.svg?branch=master
+
 # JAR Comparator
 
 ### About

@@ -9,11 +9,14 @@ JAR Comparator compares two different versions of the same jar files(compiled) a
     2. mvn clean install
 2. Once build, you can find the Uber jar at <proj_home_dir>/target/jar-comparator-<version>-executable.jar
 3. Run the uber jar
+
     ```sh
     java -jar <path of uber jar> <path of jar 1 to be compared> <path of jar 2 to be compared>
     ```
+
 ### Additional Usages
 The above command executes and prints the output in the console. If you prefer to vizualize it better, you can instead save the output in XML/HTML formats by running the following command.
+
 
 ```sh
 java -jar <uber jar> <jar 1> <jar2> <path to XML/HTML file>
@@ -40,19 +43,24 @@ java -jar [-Dconfig.pkgs=<Comma separated package names>] <uber jar> <jar 1> <ja
 ```
 
 ### What are all compared?
-1) Classes (Top level, Local, Member, Anonymous) - Added/Removed.
-2) Methods - Added/Removed. Methods whose parameters types are modified/new parameters added/existing parameters removed are showed as deleted and added. This limitation is due to Java's support for method overloading.
-3) Annotations - Added/Removed/Modified. Annotations that are defined for Types(Class), methods and method arguments are considered. Note that, only top level annotation parameters are compared. Nested annotations are ignored.
+1. Classes (Top level, Local, Member, Anonymous) - Added/Removed.
+
+2. Methods - Added/Removed. Methods whose parameters types are modified/new parameters added/existing parameters removed are showed as deleted and added. This limitation is due to Java's support for method overloading.
+
+3. Annotations - Added/Removed/Modified. Annotations that are defined for Types(Class), methods and method arguments are considered. Note that, only top level annotation parameters are compared. Nested annotations are ignored.
  
 ### Sample output
 1. Console Output
+
     ```text
     Element:com.tester.App$InnSta;Element Type:CLASS;Target:com.tester.App;Target Type:CLASS;Status:ADDED;
     Element:java.lang.Deprecated;Element Type:ANNOTATION;Target:public void com.tester.App.name();Target Type:METHOD;Status:ADDED;
     Element:com.tester.ann.Tin;Element Type:ANNOTATION;Target:com.tester.App;Target Type:CLASS;Left Value:[@com.tester.ann.Tin$TinTin(an=b), @com.tester.ann.Tin$TinTin(an=bb), @com.tester.ann.Tin$TinTin(an=bbb)];Right Value:[@com.tester.ann.Tin$TinTin(an=a), @com.tester.ann.Tin$TinTin(an=aa)];Status:MODIFIED;
     Element:java.lang.Deprecated;Element Type:ANNOTATION;Target:com.tester.App;Target Type:CLASS;Status:DELETED;
     ```
+
 2. XML Output
+
     ```xml
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <comparisonResults>
@@ -107,15 +115,23 @@ java -jar [-Dconfig.pkgs=<Comma separated package names>] <uber jar> <jar 1> <ja
     	</resultGroups>
     </comparisonResults>    
     ```
+
 3. HTML Output
+
     ```html
     <html><head><title>Jar Comparison Result</title></head><body><h2>com.tester.App</h2><table border=1><tr><th>Target</th><th>Target type</th><th>Element</th><th>Element type</th><th>Left Value</th><th>Right Value</th><th>Status</th></tr><tr><td>public void com.tester.App.name()</td><td>METHOD</td><td>java.lang.Deprecated</td><td>ANNOTATION</td><td>'NA'</td><td>'NA'</td><td>ADDED</td></tr><tr><td>com.tester.App</td><td>CLASS</td><td>java.lang.Deprecated</td><td>ANNOTATION</td><td>'NA'</td><td>'NA'</td><td>DELETED</td></tr><tr><td>com.tester.App</td><td>CLASS</td><td>com.tester.ann.Tin</td><td>ANNOTATION</td><td>[@com.tester.ann.Tin$TinTin(an=b), @com.tester.ann.Tin$TinTin(an=bb), @com.tester.ann.Tin$TinTin(an=bbb)]</td><td>[@com.tester.ann.Tin$TinTin(an=a), @com.tester.ann.Tin$TinTin(an=aa)]</td><td>MODIFIED</td></tr></table><h2>com.tester.App$Inn</h2><table border=1><tr><th>Target</th><th>Target type</th><th>Element</th><th>Element type</th><th>Left Value</th><th>Right Value</th><th>Status</th></tr><tr><td>com.tester.App</td><td>CLASS</td><td>com.tester.App$Inn</td><td>CLASS</td><td>'NA'</td><td>'NA'</td><td>ADDED</td></tr></table><h2>com.tester.App$1</h2><table border=1><tr><th>Target</th><th>Target type</th><th>Element</th><th>Element type</th><th>Left Value</th><th>Right Value</th><th>Status</th></tr><tr><td>public void com.tester.App.name()</td><td>METHOD</td><td>com.tester.App$1</td><td>CLASS</td><td>'NA'</td><td>'NA'</td><td>ADDED</td></tr></table><h2>com.tester.App$InnSta</h2><table border=1><tr><th>Target</th><th>Target type</th><th>Element</th><th>Element type</th><th>Left Value</th><th>Right Value</th><th>Status</th></tr><tr><td>com.tester.App</td><td>CLASS</td><td>com.tester.App$InnSta</td><td>CLASS</td><td>'NA'</td><td>'NA'</td><td>ADDED</td></tr></table></body></html>
     ```
 
+
 ### Comparing Jars with dependencies
+
 If your Jars have dependency libraries, you can still compare the Jars as below
+
 1. Create Uber jars of your comparabale Jars, and then optionally give the package filter to not compare the dependency Jar files. 
+
 2. Give the JVM classpath option passing the paths of all the dependency library along with the Comparator Jar and invoke the Main class.
+
     ```sh
-    java -cp [-Dconfig.pkgs=<Comma separated package names>] "<path to dependency libray:path to Comparator Uber jar>" com.h2v.java.comparator.reflect.JarComparator <path to Jar 1> <path to Jar 2> [path to XML/HTML file]
+    java -cp [-Dconfig.pkgs=<Comma separated package names>] "<path to dependency libray:path to Comparator Uber  jar>" com.h2v.java.comparator.reflect.JarComparator <path to Jar 1> <path to Jar 2> [path to XML/HTML file]
     ```
+

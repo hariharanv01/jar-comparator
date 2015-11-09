@@ -132,6 +132,6 @@ If your Jars have dependency libraries, you can still compare the Jars as below
 2. Give the JVM classpath option passing the paths of all the dependency library along with the Comparator Jar and invoke the Main class.
 
     ```sh
-    java -cp [-Dconfig.pkgs=<Comma separated package names>] "<path to dependency libray:path to Comparator Uber  jar>" com.h2v.java.comparator.reflect.JarComparator <path to Jar 1> <path to Jar 2> [path to XML/HTML file]
+    java -cp  "<path to dependency libray:path to Comparator Uber  jar>" [-Dconfig.pkgs=<Comma separated package names>] com.h2v.java.comparator.reflect.JarComparator <path to Jar 1> <path to Jar 2> [path to XML/HTML file]
     ```
 

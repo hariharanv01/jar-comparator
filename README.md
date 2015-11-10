@@ -123,6 +123,19 @@ java -jar [-Dconfig.pkgs=<Comma separated package names>] <uber jar> <jar 1> <ja
     ```html
     <html><head><title>Jar Comparison Result</title></head><body><h2>com.tester.App</h2><table border=1><tr><th>Target</th><th>Target type</th><th>Element</th><th>Element type</th><th>Left Value</th><th>Right Value</th><th>Status</th></tr><tr><td>public void com.tester.App.name()</td><td>METHOD</td><td>java.lang.Deprecated</td><td>ANNOTATION</td><td>'NA'</td><td>'NA'</td><td>ADDED</td></tr><tr><td>com.tester.App</td><td>CLASS</td><td>java.lang.Deprecated</td><td>ANNOTATION</td><td>'NA'</td><td>'NA'</td><td>DELETED</td></tr><tr><td>com.tester.App</td><td>CLASS</td><td>com.tester.ann.Tin</td><td>ANNOTATION</td><td>[@com.tester.ann.Tin$TinTin(an=b), @com.tester.ann.Tin$TinTin(an=bb), @com.tester.ann.Tin$TinTin(an=bbb)]</td><td>[@com.tester.ann.Tin$TinTin(an=a), @com.tester.ann.Tin$TinTin(an=aa)]</td><td>MODIFIED</td></tr></table><h2>com.tester.App$Inn</h2><table border=1><tr><th>Target</th><th>Target type</th><th>Element</th><th>Element type</th><th>Left Value</th><th>Right Value</th><th>Status</th></tr><tr><td>com.tester.App</td><td>CLASS</td><td>com.tester.App$Inn</td><td>CLASS</td><td>'NA'</td><td>'NA'</td><td>ADDED</td></tr></table><h2>com.tester.App$1</h2><table border=1><tr><th>Target</th><th>Target type</th><th>Element</th><th>Element type</th><th>Left Value</th><th>Right Value</th><th>Status</th></tr><tr><td>public void com.tester.App.name()</td><td>METHOD</td><td>com.tester.App$1</td><td>CLASS</td><td>'NA'</td><td>'NA'</td><td>ADDED</td></tr></table><h2>com.tester.App$InnSta</h2><table border=1><tr><th>Target</th><th>Target type</th><th>Element</th><th>Element type</th><th>Left Value</th><th>Right Value</th><th>Status</th></tr><tr><td>com.tester.App</td><td>CLASS</td><td>com.tester.App$InnSta</td><td>CLASS</td><td>'NA'</td><td>'NA'</td><td>ADDED</td></tr></table></body></html>
     ```
+    
+###### Legend
+
+Label | Description
+:-----: | :--------
+Element/Element Name | Name of the element added/deleted/modified
+Element Type | Type(Class/Method/Annotation) of the element added/deleted/modified
+Target/Target Name | Name of the target encapsulating the element. Non-top level classes will have the enclosing class/method name. Methods with have the enclosing class name. Annotations will have Class/Method name on which it's annotated
+Target Type | Type of the Target
+Status | Added/Deleted/Modified
+Left Val | Value on the left side jar, if modified
+Right Val | Value on the right side jar, if modified
+    
 
 
 ### Comparing Jars with dependencies
